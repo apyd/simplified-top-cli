@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "simple implementation of top cli utility tool which shows top 1 process running within OS",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start:dev": "ts-node index.ts"
+    "start:dev": "node ./src/index.js"
   },
   "engines": {
     "node": ">=20.11.1"
@@ -23,9 +24,5 @@
   "bugs": {
     "url": "https://github.com/apyd/simplified-top-cli/issues"
   },
-  "homepage": "https://github.com/apyd/simplified-top-cli#readme",
-  "devDependencies": {
-    "node-ts": "^6.0.1",
-    "typescript": "^5.3.3"
-  }
+  "homepage": "https://github.com/apyd/simplified-top-cli#readme"
 }
