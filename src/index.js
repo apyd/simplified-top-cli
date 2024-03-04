@@ -43,7 +43,7 @@ const createTopProcess = () => {
       if (err) {
         throw new Error(err)
       }
-    })}, 6000)
+    })}, 60000)
 
   return topProcess
 }
