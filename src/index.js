@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process'
 import process from 'node:process'
 import readline from 'node:readline'
 
-import { getTopProcessCommand, transformOutput } from './utils/index.js'
+import { getErrorMessage, getTopProcessCommand, transformOutput } from './utils/index.js'
 
 import { LOG_FILE_NAME } from './constants/index.js'
 
@@ -23,8 +23,19 @@ const createTopProcess = () => {
   const topProcess = (cmd) => {
     const top = spawn(cmd, { shell: true })
 
+    top.on('error', (error) => {
+      const errorMessage = getErrorMessage(error)
+      console.error(`Error writing to file: ${errorMessage}`);
+    });
+
     top.stdout.on('data', async (data) => {
-      output = transformOutput(data)
+      try {
+        output = transformOutput(data)
+      }
+      catch (error) {
+        const errorMessage = getErrorMessage(error)
+        console.error(`Error transforming output: ${errorMessage}`);
+      }
 
       readline.cursorTo(process.stdout, 0, 0);
       readline.clearLine(process.stdout, 0);
@@ -34,16 +45,18 @@ const createTopProcess = () => {
     })
 
     top.stderr.on('data', (data) => {
-      throw new Error(data)
+      console.error(`Error reading top process data: ${data}`);
     })
   }
 
   writeFileId = setInterval(async() => {
-    await writeFile(join(__dirname, '..', LOG_FILE_NAME), output, err => {
-      if (err) {
-        throw new Error(err)
-      }
-    })}, 60000)
+    try {
+      await writeFile(join(__dirname, '..', LOG_FILE_NAME), output)
+    }
+    catch (error) {
+      const errorMessage = getErrorMessage(error)
+      console.error(`Error writing to file: ${errorMessage}`);
+    }}, 60000)
 
   return topProcess
 }
