@@ -10,3 +10,7 @@ export const getTopProcessCommand = (os) => {
 export const transformOutput = (output) => {
   return `${Math.floor(new Date().getTime() / 1000)} : ${output}`
 }
+
+export const getErrorMessage = (error) => {
+  return error instanceof Error ? error.message : String(error)
+}
