@@ -1,4 +1,4 @@
-import { WINDOWS_NT } from "../constants"
+import { WINDOWS_NT } from "../constants/index.js"
 
 export const getTopProcessCommand = (os) => {
   switch(os) {
