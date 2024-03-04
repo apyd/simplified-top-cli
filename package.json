@@ -1,0 +1,31 @@
+{
+  "name": "simplified-top-cli",
+  "version": "1.0.0",
+  "description": "simple implementation of top cli utility tool which shows top 1 process running within OS",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "ts-node index.ts"
+  },
+  "engines": {
+    "node": ">=20.11.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apyd/simplified-top-cli.git"
+  },
+  "keywords": [
+    "top",
+    "cli",
+    "node"
+  ],
+  "author": "Artur Pydych",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apyd/simplified-top-cli/issues"
+  },
+  "homepage": "https://github.com/apyd/simplified-top-cli#readme",
+  "devDependencies": {
+    "node-ts": "^6.0.1",
+    "typescript": "^5.3.3"
+  }
+}
