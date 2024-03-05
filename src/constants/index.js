@@ -1,0 +1,3 @@
+export const LOG_FILE_NAME = 'activityMonitor.log'
+export const WINDOWS_NT = 'Windows_NT'
+export const WRITE_TIMEOUT = 60000
