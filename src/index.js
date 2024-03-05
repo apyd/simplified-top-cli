@@ -21,6 +21,7 @@ const createTopProcess = () => {
   let output = ''
 
   const topProcess = (cmd) => {
+    const startTime = Date.now()
     const top = spawn(cmd, { shell: true })
 
     top.on('error', (error) => {
@@ -29,10 +30,14 @@ const createTopProcess = () => {
     });
 
     top.stdout.on('data', async (data) => {
+      const timeElapsed = Date.now() - startTime
+      const nextExecutionRun = timeElapsed > 100 ? 0 : 100 - timeElapsed
+
+      processId = setTimeout(() => topProcess(cmd), nextExecutionRun)
+
       try {
         output = transformOutput(data)
-      }
-      catch (error) {
+      } catch (error) {
         const errorMessage = getErrorMessage(error)
         console.error(`Error transforming output: ${errorMessage}`);
       }
@@ -62,13 +67,10 @@ const createTopProcess = () => {
 }
 
 const topProcess = createTopProcess()
-
-processId = setInterval(() => {
-  topProcess(command)
-}, 100);
+topProcess(command)
 
 process.on('SIGINT', () => {
-  clearInterval(processId)
+  clearTimeout(processId)
   clearInterval(writeFileId)
   process.exit()
 })
